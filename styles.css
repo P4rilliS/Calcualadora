@@ -1,0 +1,112 @@
+html{
+  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+body{
+  background-color: #201e1e;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
+  color: rgb(245, 222, 179);
+}
+
+button{
+  background-color: #4d4848;
+  color: rgb(255, 255, 255);
+}
+
+.calculadora {
+  background-color: #4d4848;
+  border-radius: 10px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  border: 1px double #aca3a3; 
+  gap: 20px;
+}
+h1{
+  font-size: 1rem;
+  text-align: right;
+  color: rgb(245, 222, 179);
+  text-transform: uppercase;
+  letter-spacing: 20px;
+  margin: 5px;
+}
+#pantalla{
+  height: 70px;
+  width: 20rem;
+  background-color: #7accb8;
+  color: rgb(0, 0, 0);
+  display: flex; 
+  flex-direction: column; 
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding: 10px;
+  border-radius: 5px;
+  overflow: hidden;
+}
+#operacion{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  font-size: 20px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+#resultado{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  overflow: hidden;
+  white-space: nowrap;
+  font-size: 40px;
+}
+#funcionesTrigonometricas{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 70px 0 0 0;
+}
+#funcionesTrigonometricas button{
+  width: 100%;
+  height: 150%;
+  background-color: #4d4848;
+  color: rgb(255, 255, 255);
+  border-radius: 5px;
+  padding: 10px;
+}
+#funcionesTrigonometricas .colorRojo{
+  background-color: #ff0404;
+  color: rgb(255, 255, 255);
+}
+#numerosYOperadores{
+  display: flex;
+  flex-direction: row;
+  gap: 20px; 
+}
+
+#numeros{
+  display: grid;
+  grid-template-columns: repeat(3, 60px);
+  grid-template-rows: repeat(auto, 60px);
+  gap: 5px;
+  /* padding: 2px; */
+}
+#numeros .cero{
+  grid-column: span 2;
+}
+
+#operadores{
+  display: grid;
+  grid-template-columns: repeat(2, 60px);
+  grid-template-rows: repeat(4, 60px);
+  gap: 10px;
+}
+
+
