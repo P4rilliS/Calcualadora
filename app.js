@@ -32,6 +32,7 @@ const resultado = document.querySelector("#resultado")
 const numeros  = document.querySelector("#numeros")
 const operadores = document.querySelector("#operadores")
 const trigonometria = document.querySelector("#funcionesTrigonometricas")
+const terminaEn = (caracter) => operacion.innerText.endsWith(caracter)
 
 /**
   @ Funciones: ForEach, addEventListener
@@ -41,7 +42,6 @@ const trigonometria = document.querySelector("#funcionesTrigonometricas")
                   alguno de ellos. Tambien se usa "if" para cambiar 
                   ciertos símbolos operacionales y darle funcionalidad a ciertos botones
 */
-
 
 NUMEROS.forEach(numero => {
   const boton = document.createElement("button")
@@ -54,20 +54,21 @@ NUMEROS.forEach(numero => {
     if (operacion.innerText === "" && numero === ".") {
       operacion.innerText = "0"
     } else if (
-      operacion.innerText.endsWith("+") && numero === "." ||
-      operacion.innerText.endsWith("-") && numero === "." ||
-      operacion.innerText.endsWith("*") && numero === "." ||
-      operacion.innerText.endsWith("/") && numero === "." ||
-      operacion.innerText.endsWith("%") && numero === "." ||
-      operacion.innerText.endsWith("(") && numero === ".") {
+      terminaEn("+") && numero === "." ||
+      terminaEn("-") && numero === "." ||
+      terminaEn("*") && numero === "." ||
+      terminaEn("/") && numero === "." ||
+      terminaEn("%") && numero === "." ||
+      terminaEn("(") && numero === ".") {
       operacion.innerText += "0"
-    } else if (operacion.innerText.endsWith(")") && numero === ".") {
+    } else if (terminaEn(")") && numero === ".") {
       operacion.innerText += "*0"
-    } else if (operacion.innerText.endsWith(".") && numero === ".") {
+    } else if (terminaEn(".") && numero === ".") {
       return
     }
     operacion.innerText += numero
     console.log(`texto: ${operacion.innerText}`)
+    calcular()
   })})
   
 OPERADORES.forEach(operador => {
@@ -79,36 +80,123 @@ OPERADORES.forEach(operador => {
     if (operador === "Xⁿ") {
       if(
         operacion.innerText === "" || 
-        operacion.innerText.endsWith("(") || 
-        operacion.innerText.endsWith("+") || 
-        operacion.innerText.endsWith("-") || 
-        operacion.innerText.endsWith("*") || 
-        operacion.innerText.endsWith("/") || 
-        operacion.innerText.endsWith("%")) {
+        terminaEn("(") || 
+        terminaEn("+") || 
+        terminaEn("-") || 
+        terminaEn("*") || 
+        terminaEn("/") || 
+        terminaEn("%")) {
           return
-      } else {
-        operacion.innerText += "^("
-      }
-    } else if (operador === "X") {      
-      operacion.innerText += "*"
-    } else if (operador === "÷") {
-      operacion.innerText += "/"
+        } else {
+          operacion.innerText += "^("
+        }
     } else if (operador === "%") {
-      if (operacion.innerText === "" || 
-          operacion.innerText.endsWith("(") || 
-          operacion.innerText.endsWith("+") || 
-          operacion.innerText.endsWith("-") || 
-          operacion.innerText.endsWith("*") || 
-          operacion.innerText.endsWith("/") ||
-          operacion.innerText.endsWith("%")) {
-        return
+      if (
+        operacion.innerText === "" || 
+        terminaEn("(") || 
+        terminaEn("+") || 
+        terminaEn("-") || 
+        terminaEn("*") || 
+        terminaEn("/") ||
+        terminaEn("%")){ 
+          return
+        } else { 
+          operacion.innerText += operador
+        }    
+    } else if (operador === ")") {
+      if (operacion.innerText.includes("(")) {
+        let parentesisAbiertos = (operacion.innerText.match(/\(/g) || []).length
+        let parentesisCerrados = (operacion.innerText.match(/\)/g) || []).length
+        if(
+          terminaEn("(") ||
+          terminaEn("+") ||
+          terminaEn("-") ||
+          terminaEn("*") ||
+          terminaEn("/") ||
+          terminaEn(".")) {
+            return
+          } else {
+            if (parentesisAbiertos > parentesisCerrados) {
+              console.log("hay mas parentesis abiertos")
+              parentesisCerrados++
+              operacion.innerText += operador
+              console.log(`C: ${parentesisCerrados}\nA: ${parentesisAbiertos}`)
+          }
+        }}
+    } else if (operador === "X") {
+      if (
+        operacion.innerText === "" ||
+        terminaEn("(") ||
+        terminaEn(".")) {
+          return
+        } else if (
+          terminaEn("+") ||
+          terminaEn("-") ||
+          terminaEn("*") ||
+          terminaEn("/")) {
+            operacion.innerText = operacion.innerText.slice(0, -1)
+            operacion.innerText += "*"
+        }else {
+          operacion.innerText += "*"
+        }
+    } else if (operador === "÷") {
+      if (
+        operacion.innerText === "" ||
+        terminaEn("(") ||
+        terminaEn(".")) {
+          return
+        } else if (
+          terminaEn("+") ||
+          terminaEn("-") ||
+          terminaEn("*") ||
+          terminaEn("/")) {
+            operacion.innerText = operacion.innerText.slice(0, -1)
+            operacion.innerText += "/"
+        }else {
+          operacion.innerText += "/"
+        }
+    } else if (operador === "+") {
+      if (
+        operacion.innerText === "" ||
+        terminaEn("(") ||
+        terminaEn(".")) {
+          return
+        } else if (
+          terminaEn("+") ||
+          terminaEn("-") ||
+          terminaEn("*") ||
+          terminaEn("/")) {
+            operacion.innerText = operacion.innerText.slice(0, -1)
+            operacion.innerText += "+"
+        }else {
+          operacion.innerText += "+"
+        }
+    } else if (operador === "-") {
+      if (
+        terminaEn("(") ||
+        terminaEn(".")) {
+          return
+        } else if (
+          terminaEn("+") ||
+          terminaEn("-") ||
+          terminaEn("*") ||
+          terminaEn("/")) {
+            operacion.innerText = operacion.innerText.slice(0, -1)
+            operacion.innerText += "-"
+        }else {
+          operacion.innerText += "-"
+        }
+    } else if (operador === "(") {
+      if (
+        !isNaN(operacion.innerText[operacion.innerText.length -1]) || 
+        terminaEn(")")){
+          operacion.innerText += "*("
       } else {
         operacion.innerText += operador
       }
-    } else {
-      operacion.innerText += operador
     }
-      console.log(`texto: ${operacion.innerText}`)})}) 
+    calcular()
+    console.log(`texto: ${operacion.innerText}`)})}) 
 
 TRIGONOMETRIA.forEach((funcion, index) => {
   const boton = document.createElement("button")
@@ -122,7 +210,7 @@ TRIGONOMETRIA.forEach((funcion, index) => {
       operacion.innerText = ""
       resultado.innerText = ""
     } else if (funcion === "C") {
-      if(operacion.innerText.endsWith("sen(") || operacion.innerText.endsWith("cos(") || operacion.innerText.endsWith("tan(")) {
+      if(terminaEn("sen(") || terminaEn("cos(") || terminaEn("tan(")) {
         operacion.innerText = operacion.innerText.slice(0, -4)
       } else {
         operacion.innerText = operacion.innerText.slice(0, -1)
@@ -136,7 +224,7 @@ TRIGONOMETRIA.forEach((funcion, index) => {
 document.addEventListener("keydown", (evento) => {
   if (TECLASPERMITIDAS.includes(evento.key)) {
     if(evento.key == "Backspace"){
-      if(operacion.innerText.endsWith("sen(") || operacion.innerText.endsWith("cos(") || operacion.innerText.endsWith("tan(")) {
+      if(terminaEn("sen(") || terminaEn("cos(") || terminaEn("tan(")) {
         operacion.innerText = operacion.innerText.slice(0, -4)
       }else {
         operacion.innerText = operacion.innerText.slice(0, -1)
@@ -146,8 +234,14 @@ document.addEventListener("keydown", (evento) => {
     }else {
       operacion.innerText += evento.key   
     }
+    calcular()
     console.log(`texto: ${operacion.innerText}`)}})
 
 
 
 // CONSTANTES, VARIABLES Y FUNCIONES PARA LA LOGICA DE LA CALCULADORA
+
+function calcular () {
+  resultado.innerText = eval(operacion.innerText)
+}
+
