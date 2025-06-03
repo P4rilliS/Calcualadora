@@ -88,7 +88,7 @@ OPERADORES.forEach(operador => {
         terminaEn("%")) {
           return
         } else {
-          operacion.innerText += "^("
+          operacion.innerText += "**("
         }
     } else if (operador === "%") {
       if (
@@ -215,7 +215,7 @@ TRIGONOMETRIA.forEach((funcion, index) => {
       } else {
         operacion.innerText = operacion.innerText.slice(0, -1)
       }
-    } else {
+    } else if (funcion === "sen" || funcion === "cos" || funcion === "tan") {
       operacion.innerText += `${funcion}(`
     }
     console.log(`texto: ${operacion.innerText}`)})})
@@ -241,7 +241,19 @@ document.addEventListener("keydown", (evento) => {
 
 // CONSTANTES, VARIABLES Y FUNCIONES PARA LA LOGICA DE LA CALCULADORA
 
-function calcular () {
-  resultado.innerText = eval(operacion.innerText)
-}
+// function calcular () {
+//   resultado.innerText = eval(operacion.innerText)
+// }
 
+function calcular() {
+    let expresion = operacion.innerText
+        .replace(/sen\(/g, "Math.sin((Math.PI/180)*") // 🔥 Convierte "sen(" a "Math.sin("
+        .replace(/cos\(/g, "Math.cos((Math.PI/180)*")  // 🔥 Convierte "cos(" a "Math.cos("
+        .replace(/tan\(/g, "Math.tan((Math.PI/180)*"); // 🔥 Convierte "tan(" a "Math.tan("
+    
+    try {
+        resultado.innerText = eval(expresion);
+    } catch (error) {
+        resultado.innerText = "Error"; // ❌ Evita expresiones inválidas
+    }
+}

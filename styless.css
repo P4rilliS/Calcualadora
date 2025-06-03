@@ -13,7 +13,7 @@ body{
 
 button{
   background-color: #4d4848;
-  color: rgb(255, 255, 255);
+  color: #ffffff;
 }
 
 .calculadora {
@@ -64,7 +64,7 @@ h1{
   justify-content: flex-end;
   overflow: hidden;
   white-space: nowrap;
-  font-size: 40px;
+  font-size: 30px;
 }
 #funcionesTrigonometricas{
   display: flex;
