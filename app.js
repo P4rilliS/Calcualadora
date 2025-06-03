@@ -22,11 +22,11 @@ const TECLASPERMITIDAS = [
   "0", "1", "2", "3", "4", "5", "6", "7", "8", "9","(", ")",
   "%", "Backspace","*", "/", "+", "-", "."]
   
-  /**
-    @ Constantes: operacion,numeros. operadores, trigonometria
-    @ Tipo: Elementos de DOM 
-    @ Descripción: Selecciona a elementos del DOM y le asigna una constante
-  */
+/**
+  @ Constantes: operacion,numeros. operadores, trigonometria
+  @ Tipo: Elementos de DOM 
+  @ Descripción: Selecciona a elementos del DOM y le asigna una constante
+*/
 const operacion = document.querySelector("#operacion")
 const resultado = document.querySelector("#resultado")
 const numeros  = document.querySelector("#numeros")
@@ -238,22 +238,23 @@ document.addEventListener("keydown", (evento) => {
     console.log(`texto: ${operacion.innerText}`)}})
 
 
-
-// CONSTANTES, VARIABLES Y FUNCIONES PARA LA LOGICA DE LA CALCULADORA
-
-// function calcular () {
-//   resultado.innerText = eval(operacion.innerText)
-// }
+/** 
+  @función: calcular
+  @Descripción: calcula la expresión matemática que esta en la seccion "operación".
+                Sustituye las operaciones trigonometricas para que JS pueda leerlas.
+                Agrega otra operacion para pasar el resultado de Radianes (Rad) a Grados (Deg).
+                Si la expresion escrita no se puede resolver muertra Error.
+ */ 
 
 function calcular() {
     let expresion = operacion.innerText
-        .replace(/sen\(/g, "Math.sin((Math.PI/180)*") // 🔥 Convierte "sen(" a "Math.sin("
-        .replace(/cos\(/g, "Math.cos((Math.PI/180)*")  // 🔥 Convierte "cos(" a "Math.cos("
-        .replace(/tan\(/g, "Math.tan((Math.PI/180)*"); // 🔥 Convierte "tan(" a "Math.tan("
+        .replace(/sen\(/g, "Math.sin((Math.PI/180)*")
+        .replace(/cos\(/g, "Math.cos((Math.PI/180)*")
+        .replace(/tan\(/g, "Math.tan((Math.PI/180)*")
     
     try {
         resultado.innerText = eval(expresion);
     } catch (error) {
-        resultado.innerText = "Error"; // ❌ Evita expresiones inválidas
+        resultado.innerText = "Error"
     }
 }
